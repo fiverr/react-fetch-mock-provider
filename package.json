@@ -1,0 +1,40 @@
+{
+  "name": "@fiverr/react-fetch-mock-provider",
+  "version": "0.0.1",
+  "description": "Mock http requests made using fetch from your react component",
+  "author": "Fiverr",
+  "license": "MIT",
+  "homepage": "https://github.com/fiverr/react-fetch-mock-provider#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fiverr/react-fetch-mock-provider.git"
+  },
+  "keywords": [
+    "react",
+    "fetch",
+    "mock",
+    "http"
+  ],
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "webpack --mode development",
+    "build": "webpack --mode production",
+    "stats": "webpack --mode production --profile --json | npx chunkalyse"
+  },
+  "peerDependencies": {
+    "react": "^0.14.7 || ^15.0.0-0 || ^16.0.0-0"
+  },
+  "dependencies": {
+    "fetch-mock": "^7.2.5",
+    "prop-types": "^15.6.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "react": "^16.6.3",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
