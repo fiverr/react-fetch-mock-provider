@@ -18,12 +18,27 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Build dist
+          command: npm run build
+      - save_cache:
+          key: build-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ./dist
   publish:
     <<: *defaults
     steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          key: build-{{ .Branch }}-{{ .Revision }}
       - run:
           name: Set npmrc credentials
           command: echo -e $NPMRC > ~/.npmrc
@@ -36,7 +51,10 @@ workflows:
   delivery:
     jobs:
       - dependencies
+      - build:
+          requires:
+            - dependencies
       - publish:
           context: org-global
           requires:
-            - dependencies
+            - build
