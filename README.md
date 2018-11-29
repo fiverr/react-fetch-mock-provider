@@ -3,7 +3,7 @@
 ### Example
 
 ```js
-import FetchMockProvider from 'react-fetch-mock-provider';
+import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
 
 <FetchMockProvider mocks={[{
     request: {
