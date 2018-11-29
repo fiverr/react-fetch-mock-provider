@@ -1,4 +1,7 @@
 module.exports = {
+    output: {
+        libraryTarget: 'umd'
+    },
     module: {
         rules: [{
             test: /\.js$/,
@@ -13,8 +16,5 @@ module.exports = {
                 }
             }
         }]
-    },
-    externals: {
-        "react": "React"
     }
 };
