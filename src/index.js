@@ -21,12 +21,13 @@ class FetchMockProvider extends Component {
             ({ request, response } = {}) =>
                 fetchMock.mock(
                     request.url,
-                    () => new Promise((resolve) =>
+                    (...args) => new Promise((resolve) => {
+                        const res = (typeof response === 'function') ? response(...args) : response;
                         setTimeout(() => resolve({
-                            body: response.body,
-                            status: response.status
-                        }), 1000)
-                    ),
+                            body: res.body,
+                            status: res.status
+                        }), 1000);
+                    }),
                     { method: request.method }
                 )
         );
@@ -47,10 +48,13 @@ FetchMockProvider.propTypes = {
                 ]),
                 method: PropTypes.string
             }),
-            response: PropTypes.shape({
-                status: PropTypes.number,
-                body: PropTypes.object
-            })
+            response: PropTypes.oneOfType([
+                PropTypes.func,
+                PropTypes.shape({
+                    status: PropTypes.number,
+                    body: PropTypes.object
+                })
+            ])
         }),
     ),
     children: PropTypes.oneOfType([
