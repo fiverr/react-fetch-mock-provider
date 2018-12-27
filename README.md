@@ -25,3 +25,5 @@ import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
     <Users/>
 </FetchMockProvider>
 ```
+
+response props can also be a function that will receive the fetch request params and should return the same object shown above that includes body, status.
