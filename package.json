@@ -1,6 +1,6 @@
 {
   "name": "@fiverr/react-fetch-mock-provider",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Mock http requests made using fetch from your react component",
   "author": "Fiverr",
   "license": "MIT",

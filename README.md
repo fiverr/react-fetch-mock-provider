@@ -9,7 +9,7 @@ import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
     request: {
         url: /users/,
         method: 'GET'
-    }
+    },
     response: {
         body: {
             users: {
@@ -21,6 +21,52 @@ import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
             }
         },
         status: 200
+    }}]}>
+    <Users/>
+</FetchMockProvider>
+```
+
+response props can also be a function that will receive the fetch request params and should return the same object shown above that includes body, status.
+
+### Functinal Examples
+
+```js
+import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
+
+<FetchMockProvider mocks={[{
+    request: {
+        url: /users/,
+        method: 'GET'
+    },
+    response: (request) => ({
+        // Build server response based on the GET param in the url!
+        body: getResponseByAttachmentsIDsParam(request.split('attachment_id=')[1]),
+        status: 200
+    })}]}>
+    <Users/>
+</FetchMockProvider>
+```
+
+```js
+import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
+
+<FetchMockProvider mocks={[{
+    request: {
+        url: /users/,
+        method: 'POST'
+    },
+    response: (request, payload) => {
+        const {comments} = JSON.parse(payload.body);
+        // Build server keys for comments based on the POST payload!
+        const keysMapping = reduce(comments, (acc, comment) => {
+            acc[comment.id] = uid();
+            return acc;
+        }, {});
+
+        return {
+            body: keysMapping,
+            status: 200
+        };
     }}]}>
     <Users/>
 </FetchMockProvider>
