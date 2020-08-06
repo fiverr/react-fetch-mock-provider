@@ -1,6 +1,18 @@
 # react-fetch-mock-provider
 
-### Example
+A "Reactified" wrapper around [`fetch-mock`](https://github.com/wheresrhys/fetch-mock), that provides a more React-friendly interface.
+
+This component allows you to easily mock HTTP requests made with `fetch`.
+
+## Installation
+
+```
+npm install -D @fiverr/react-fetch-mock-provider
+```
+
+## Usage
+
+### Basic mocking
 
 ```js
 import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
@@ -26,9 +38,11 @@ import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
 </FetchMockProvider>
 ```
 
-response props can also be a function that will receive the fetch request params and should return the same object shown above that includes body, status.
+### Using a Function for `response`
 
-### Functinal Examples
+Same as in `fetch-mock`, the `response` prop can be a function.
+
+See the full documentation [here](http://www.wheresrhys.co.uk/fetch-mock/#api-mockingmock_response).
 
 ```js
 import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
@@ -38,34 +52,12 @@ import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
         url: /users/,
         method: 'GET'
     },
-    response: (request) => ({
-        // Build server response based on the GET param in the url!
-        body: getResponseByAttachmentsIDsParam(request.split('attachment_id=')[1]),
-        status: 200
-    })}]}>
-    <Users/>
-</FetchMockProvider>
-```
-
-```js
-import FetchMockProvider from '@fiverr/react-fetch-mock-provider';
-
-<FetchMockProvider mocks={[{
-    request: {
-        url: /users/,
-        method: 'POST'
-    },
     response: (request, payload) => {
-        const {comments} = JSON.parse(payload.body);
-        // Build server keys for comments based on the POST payload!
-        const keysMapping = reduce(comments, (acc, comment) => {
-            acc[comment.id] = uid();
-            return acc;
-        }, {});
+        const status = payload.body.someRequiredParameter ? 200 : 500;
 
         return {
-            body: keysMapping,
-            status: 200
+            body: {},
+            status
         };
     }}]}>
     <Users/>
